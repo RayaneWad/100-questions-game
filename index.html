@@ -171,11 +171,12 @@
       background: linear-gradient(180deg, #fff7fb 0%, #ffe5f1 100%);
       border: 1px solid rgba(255, 112, 144, 0.22);
       border-radius: 24px;
-      padding: 34px 24px 24px 58px;
-      min-height: 160px;
+      padding: 48px 18px 48px;
+      min-height: 170px;
       display: flex;
       align-items: center;
       justify-content: center;
+      text-align: center;
       font-size: clamp(1.1rem, 2vw, 1.45rem);
       line-height: 1.4;
       color: #61314a;
@@ -185,9 +186,14 @@
     .question-text::before {
       content: '💗';
       position: absolute;
-      left: 20px;
-      top: 18px;
-      font-size: 1.2rem;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      opacity: 0.15;
+      pointer-events: none;
+      z-index: 0;
     }
 
     label {
@@ -252,6 +258,7 @@
     }
 
     .grid-title {
+      padding-left: 20px;
       font-size: 1.05rem;
       font-weight: 700;
       margin: 0 0 6px;
@@ -372,18 +379,23 @@
       }
 
       .question-text {
-        min-height: 140px;
-        padding: 34px 18px 24px 56px;
+        min-height: 170px;
+        padding: 48px 18px 48px;
+        align-items: center;
       }
 
       .question-text::before {
-        left: 16px;
-        top: 16px;
-        font-size: 1.1rem;
+        font-size: 4rem;
+        opacity: 0.15;
       }
 
       .grid-panel {
         padding: 0 4px;
+      }
+
+      .grid-title {
+        padding-top: 12px;
+
       }
     }
   </style>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>100 Questions About You</title>
+
+  <style>
+    :root {
+      --bg: #ffe6f2;
+      --card: #fff1f8;
+      --card-dark: #ffcce2;
+      --accent: #ff7090;
+      --accent-2: #ff93b5;
+      --text: #3a1f2f;
+      --border: rgba(255, 112, 144, 0.25);
+      --shadow: 0 18px 40px rgba(255, 112, 144, 0.18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #fff0f7 0%, #ffdce7 35%, #ffe6f2 100%);
+      color: var(--text);
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 24px 16px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    header > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      background: rgba(255, 112, 144, 0.2);
+      border: 1px solid rgba(255, 112, 144, 0.4);
+      color: #70384d;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 112, 144, 0.3);
+    }
+
+    .lang-btn.active {
+      background: linear-gradient(135deg, #ff7fa0, #ff4e8a);
+      color: white;
+      border-color: #ff4e8a;
+    }
+
+    .wifi-status {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      transition: all 0.3s ease;
+      cursor: help;
+      background: #28a745;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+      border: none;
+      padding: 0;
+    }
+
+    .wifi-status.offline {
+      background: #ccc;
+      box-shadow: 0 4px 12px rgba(200, 200, 200, 0.3);
+    }
+
+    .wifi-status:hover {
+      transform: scale(1.08);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      margin: 0;
+      letter-spacing: -0.04em;
+    }
+
+    p.lead {
+      margin: 12px auto 0;
+      color: #6f3d58;
+      max-width: 760px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .game-area {
+      width: 100%;
+      max-width: 1080px;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1.2fr) 0.8fr;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      backdrop-filter: blur(12px);
+    }
+
+    .question-card {
+      display: grid;
+      gap: 16px;
+    }
+
+    .question-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .question-header .badge {
+      background: linear-gradient(135deg, #ff85a2, #ff6a95);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.01em;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background: rgba(255, 112, 144, 0.16);
+      border-radius: 999px;
+      height: 14px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ff8cb7, #ff5b8c);
+      transition: width 0.35s ease;
+    }
+
+    .question-text {
+      background: linear-gradient(180deg, #fff7fb 0%, #ffe5f1 100%);
+      border: 1px solid rgba(255, 112, 144, 0.22);
+      border-radius: 24px;
+      padding: 24px;
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.1rem, 2vw, 1.45rem);
+      line-height: 1.4;
+      color: #61314a;
+      position: relative;
+    }
+
+    .question-text::before {
+      content: '💗';
+      position: absolute;
+      left: 20px;
+      top: 18px;
+      font-size: 1.2rem;
+    }
+
+    label {
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #70384d;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 112, 144, 0.4);
+      border-radius: 18px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      outline: none;
+      background: white;
+      color: #4c2b3c;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #ff8db3;
+      box-shadow: 0 0 0 4px rgba(255, 112, 144, 0.12);
+    }
+
+    textarea { resize: vertical; min-height: 110px; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff7fa0, #ff4e8a);
+      border: none;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 999px;
+      box-shadow: 0 12px 24px rgba(255, 82, 141, 0.28);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .hint {
+      font-size: 0.95rem;
+      color: #7a4c64;
+      margin: 0;
+    }
+
+    .grid-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: #642f4d;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .box {
+      position: relative;
+      min-height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: white;
+      background: rgba(255, 112, 144, 0.16);
+      border: 1px solid rgba(255, 112, 144, 0.25);
+      transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
+      overflow: hidden;
+    }
+
+    .box.locked {
+      filter: blur(1.4px);
+      opacity: 0.65;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .box.current {
+      background: linear-gradient(180deg, #ff95b7, #ff5b8c);
+      transform: scale(1.03);
+      box-shadow: 0 16px 34px rgba(255, 117, 166, 0.22);
+    }
+
+    .box.answered {
+      background: linear-gradient(180deg, #ff70a7, #ff4788);
+    }
+
+    .box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.32), transparent 45%);
+      opacity: 0.35;
+    }
+
+    .box span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .box.locked::before {
+      content: '🔒';
+      position: absolute;
+      font-size: 1.3rem;
+      opacity: 0.8;
+    }
+
+    .complete-banner {
+      text-align: center;
+      padding: 30px 20px;
+      border-radius: 28px;
+      background: #ffd9e8;
+      border: 1px solid rgba(255, 112, 144, 0.3);
+      color: #5a2a48;
+      margin-top: 10px;
+    }
+
+    .complete-banner h2 {
+      margin: 0 0 12px;
+      font-size: 1.75rem;
+    }
+
+    .complete-banner p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff6f94;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 999px;
+      box-shadow: 0 12px 28px rgba(255, 82, 141, 0.28);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 50;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 860px) {
+      .game-area {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .question-text {
+        min-height: 120px;
+      }
+
+      .grid-panel {
+        padding: 0 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <button class="wifi-status" id="wifiStatus" title="Connection status">📡</button>
+        <div>
+          <h1 id="mainTitle">100 Questions About You</h1>
+          <p class="lead" id="mainLead">Play the pink question adventure. Answer one question to unlock the next tile, and discover more about each other step by step.</p>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="lang-btn active" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="nl">Nederlands</button>
+          <button class="lang-btn" data-lang="es">Español</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="game-area">
+      <section class="panel question-card">
+        <div class="question-header">
+          <div class="badge" id="questionCount">Question 1 of 100</div>
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <div class="question-text" id="questionText">Loading...</div>
+
+        <div>
+          <label for="answerInput" id="answerLabel">Your answer</label>
+          <textarea id="answerInput" placeholder="Type your answer here..."></textarea>
+        </div>
+
+        <div class="actions">
+          <button id="submitBtn">Next question</button>
+          <p class="hint" id="hintText">Each answer unlocks a new pink tile.</p>
+        </div>
+
+        <div class="complete-banner" id="completeBanner" style="display:none;">
+          <h2 id="completeBannerTitle">You made it! 🎉</h2>
+          <p id="completeBannerMsg">All 100 questions answered. You've journeyed from light discovery to deeper connection.</p>
+        </div>
+      </section>
+
+      <section class="panel grid-panel">
+        <h2 class="grid-title" id="unlockedLabel">Unlocked questions</h2>
+        <div class="grid" id="grid"></div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast">Please type an answer before moving on.</div>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        title: '100 Questions About You',
+        lead: 'Play the pink question adventure. Answer one question to unlock the next tile, and discover more about each other step by step.',
+        yourAnswer: 'Your answer',
+        placeholder: 'Type your answer here...',
+        nextQuestion: 'Next question',
+        hint: 'Each answer unlocks a new pink tile.',
+        finished: 'You have answered every question!',
+        progress: 'of 100',
+        unlockedLabel: 'Unlocked questions',
+        emptyError: 'Please type an answer before moving on.',
+        done: 'You made it! 🎉',
+        doneMsg: 'All 100 questions answered. You\'ve journeyed from light discovery to deeper connection.'
+      },
+      nl: {
+        title: '100 Vragen Over Jou',
+        lead: 'Speel het roze vragen-avontuur. Beantwoord een vraag om het volgende vakje te ontgrendelen, en ontdek stap voor stap meer over elkaar.',
+        yourAnswer: 'Jouw antwoord',
+        placeholder: 'Typ hier je antwoord...',
+        nextQuestion: 'Volgende vraag',
+        hint: 'Elke antwoord ontgrendelt een nieuw roze vakje.',
+        finished: 'Je hebt alle vragen beantwoord!',
+        progress: 'van 100',
+        unlockedLabel: 'Ontgrendelde vragen',
+        emptyError: 'Typ eerst een antwoord voordat je verder gaat.',
+        done: 'Je hebt het gehaald! 🎉',
+        doneMsg: 'Alle 100 vragen beantwoord. Je bent gegaan van lichte kennismaking naar diepere verbinding.'
+      },
+      es: {
+        title: '100 Preguntas Sobre Ti',
+        lead: 'Juega la aventura de preguntas rosas. Responde una pregunta para desbloquear la siguiente casilla y descubre más sobre uno al otro paso a paso.',
+        yourAnswer: 'Tu respuesta',
+        placeholder: 'Escribe tu respuesta aquí...',
+        nextQuestion: 'Siguiente pregunta',
+        hint: 'Cada respuesta desbloquea una nueva casilla rosa.',
+        finished: '¡Has respondido todas las preguntas!',
+        progress: 'de 100',
+        unlockedLabel: 'Preguntas desbloqueadas',
+        emptyError: 'Por favor escribe una respuesta antes de continuar.',
+        done: '¡Lo hiciste! 🎉',
+        doneMsg: 'Las 100 preguntas respondidas. Has pasado de un descubrimiento ligero a una conexión más profunda.'
+      }
+    };
+
+    const questions = [
+      'Which color makes you feel calm, and why?',
+      'Which song instantly lifts your mood?',
+      'What do you enjoy doing on a quiet day?',
+      'Which snack makes any evening better?',
+      'What was the last movie or show that really stayed with you?',
+      'Where do you feel most relaxed?',
+      'If you could travel anywhere tomorrow, where would you go?',
+      'What small thing in your day makes you smile?',
+      'What do you love most about your favorite season?',
+      'What emoji do you use most often?',
+      'Which animal do you find most curious?',
+      'What usually makes you laugh out loud?',
+      'Is there a hobby you would like to learn one day?',
+      'Are you more of a morning person or an evening person?',
+      'What meal feels like comfort food to you?',
+      'What memory do you return to when you need a little boost?',
+      'What place near you feels peaceful?',
+      'What skill would you love to master?',
+      'How do you like to spend time with friends?',
+      'Describe your perfect relaxing day.',
+      'What quality do you value in a close friend?',
+      'What gives you energy when you feel tired?',
+      'What kind of compliment means the most to you?',
+      'What is one thing you are curious to learn more about?',
+      'How do you usually begin a good day?',
+      'What makes an evening feel special to you?',
+      'Which scent brings back a good memory?',
+      'Which book or story inspired you?',
+      'Where do you go when you need time alone?',
+      'What activity can absorb you for hours?',
+      'What small routine makes your day better?',
+      'What do you find most beautiful in nature?',
+      'What is your favorite drink to relax with?',
+      'What recent decision made you feel proud?',
+      'How do you like to unwind after a busy day?',
+      'What would you share first with someone new?',
+      'Why do you appreciate people who listen well?',
+      'What time of day feels the coziest?',
+      'What is your ideal way to celebrate a good day?',
+      'Which sound makes you feel calm?',
+      'What place feels like a safe haven to you?',
+      'What do you do every day just for yourself?',
+      'What kind of praise do you like to give?',
+      'What adventure would you like to try one day?',
+      'What item of clothing makes you feel most comfortable?',
+      'Which childhood memory still makes you smile?',
+      'How would you describe a warm atmosphere?',
+      'What questions do you enjoy asking someone new?',
+      'What makes you feel curious?',
+      'What is your favorite way to start the weekend?',
+      'What do you like to do on a rainy day at home?',
+      'Do you prefer cooking together or trying something new?',
+      'What makes your heart race in a good way?',
+      'Which personality trait do you admire most?',
+      'What do you find hard to share?',
+      'Describe your dream day with friends.',
+      'What kind of compliment brightens your day?',
+      'Which memory would you never want to forget?',
+      'What gives you a warm feeling inside?',
+      'How do you show someone that you care?',
+      'What do you enjoy about a pleasant surprise?',
+      'What small moment feels extra meaningful?',
+      'How do you feel when someone truly pays attention?',
+      'What are you grateful for today?',
+      'What gentle habit is important in a relationship?',
+      'How do you cheer someone up?',
+      'What dream do you keep close to your heart?',
+      'How would a relaxed evening together look?',
+      'What does respect look like to you?',
+      'How would you like to be remembered by someone?',
+      'What do you enjoy about getting to know someone slowly?',
+      'What is a quiet way to relax with another person?',
+      'What quality feels charming without being too much?',
+      'What makes a calm conversation feel meaningful?',
+      'What question feels brave but worth asking?',
+      'What do you share when you trust someone?',
+      'What makes a sweet message feel special?',
+      'What about a smile touches you most?',
+      'Would you choose a funny night or a cozy night?',
+      'What kind words would you love to hear more often?',
+      'What detail in someone catches your attention?',
+      'What memory of a nice evening do you treasure?',
+      'What little thing makes your heart beat faster in a good way?',
+      'What gives you hope when you think of someone special?',
+      'What would you most like to share with someone getting closer?',
+      'What is a soft way to flirt that feels natural?',
+      'What compliment surprises you in the best way?',
+      'What small gesture catches your attention?',
+      'What feels romantic in a simple conversation?',
+      'How do you quietly show appreciation for someone?',
+      'What kind of evening helps you understand someone better?',
+      'What question would you ask to learn about us?',
+      'What small gesture says the most without words?',
+      'What about a smile makes you feel understood?',
+      'What thought about someone you like makes you smile?',
+      'How do you describe a feeling of connection?',
+      'What would you want to remember about a new special person?',
+      'How do you let someone know you care without pressure?',
+      'What little dream do you have about growing closer?',
+      'What would you say to someone you like without rushing?'
+    ];
+
+    let currentLanguage = 'en';
+    const grid = document.getElementById('grid');
+    const questionText = document.getElementById('questionText');
+    const questionCount = document.getElementById('questionCount');
+    const progressFill = document.getElementById('progressFill');
+    const answerInput = document.getElementById('answerInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const completeBanner = document.getElementById('completeBanner');
+    const toast = document.getElementById('toast');
+    const wifiStatus = document.getElementById('wifiStatus');
+
+    let currentIndex = 0;
+    const answers = Array(questions.length).fill('');
+
+    function updateLanguage(lang) {
+      currentLanguage = lang;
+      const t = translations[lang];
+      
+      document.getElementById('mainTitle').textContent = t.title;
+      document.getElementById('mainLead').textContent = t.lead;
+      document.getElementById('answerLabel').textContent = t.yourAnswer;
+      document.getElementById('answerInput').placeholder = t.placeholder;
+      document.getElementById('submitBtn').textContent = t.nextQuestion;
+      document.getElementById('hintText').textContent = t.hint;
+      document.getElementById('unlockedLabel').textContent = t.unlockedLabel;
+      document.getElementById('toast').textContent = t.emptyError;
+      document.getElementById('completeBannerTitle').textContent = t.done;
+      document.getElementById('completeBannerMsg').textContent = t.doneMsg;
+      
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      
+      renderQuestion();
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => updateLanguage(btn.dataset.lang));
+    });
+
+    function buildGrid() {
+      grid.innerHTML = '';
+      for (let i = 0; i < questions.length; i++) {
+        const box = document.createElement('div');
+        box.className = 'box locked';
+        box.setAttribute('data-index', i);
+        box.innerHTML = `<span>${i + 1}</span>`;
+        grid.appendChild(box);
+      }
+      updateGrid();
+    }
+
+    function updateGrid() {
+      const boxes = grid.querySelectorAll('.box');
+      boxes.forEach((box) => {
+        const index = Number(box.dataset.index);
+        box.classList.toggle('answered', answers[index].length > 0);
+        box.classList.toggle('current', index === currentIndex);
+        box.classList.toggle('locked', index !== currentIndex && answers[index].length === 0);
+        if (answers[index].length > 0) {
+          box.innerHTML = `<span>✓</span>`;
+        } else {
+          box.innerHTML = `<span>${index + 1}</span>`;
+        }
+      });
+    }
+
+    function renderQuestion() {
+      const t = translations[currentLanguage];
+      if (currentIndex >= questions.length) {
+        questionText.textContent = t.finished;
+        questionCount.textContent = '100 ' + t.progress;
+        answerInput.style.display = 'none';
+        submitBtn.style.display = 'none';
+        completeBanner.style.display = 'block';
+        progressFill.style.width = '100%';
+        // Send email when quiz is complete
+        setTimeout(() => sendAnswersEmail(), 500);
+        return;
+      }
+      questionText.textContent = questions[currentIndex];
+      questionCount.textContent = `${currentIndex + 1} ${t.progress}`;
+      answerInput.value = answers[currentIndex] || '';
+      answerInput.style.display = 'block';
+      submitBtn.style.display = 'inline-flex';
+      completeBanner.style.display = 'none';
+      progressFill.style.width = `${((currentIndex) / (questions.length - 1)) * 100}%`;
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    submitBtn.addEventListener('click', () => {
+      const answer = answerInput.value.trim();
+      if (!answer) {
+        showToast(translations[currentLanguage].emptyError);
+        return;
+      }
+
+      const questionIndex = currentIndex;
+      const questionTextValue = questions[questionIndex];
+      answers[questionIndex] = answer;
+      currentIndex += 1;
+      updateGrid();
+      renderQuestion();
+      answerInput.focus();
+      sendSingleAnswerEmail(questionIndex, questionTextValue, answer);
+    });
+
+    answerInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        submitBtn.click();
+      }
+    });
+
+    // WiFi Status Monitoring
+    function updateWiFiStatus() {
+      if (navigator.onLine) {
+        wifiStatus.classList.remove('offline');
+        wifiStatus.textContent = '📡';
+        wifiStatus.title = 'Connected - Answers will be sent';
+      } else {
+        wifiStatus.classList.add('offline');
+        wifiStatus.textContent = '📡';
+        wifiStatus.title = 'Offline - Answers saved locally';
+      }
+    }
+
+    window.addEventListener('online', updateWiFiStatus);
+    window.addEventListener('offline', updateWiFiStatus);
+    updateWiFiStatus();
+
+    // Send a single answer email using Formsubmit AJAX
+    async function sendSingleAnswerEmail(index, questionTextValue, answerValue) {
+      if (!navigator.onLine) {
+        showToast('No internet - answer saved locally');
+        return;
+      }
+
+      try {
+        const formData = new FormData();
+        formData.append('_subject', `Question ${index + 1} Answered`);
+        formData.append('question', questionTextValue);
+        formData.append('answer', answerValue);
+        formData.append('name', '100 Questions Game');
+        formData.append('_replyto', 'no-reply@questiongame.local');
+        formData.append('_captcha', 'false');
+        formData.append('_template', 'table');
+
+        const response = await fetch('https://formsubmit.co/ajax/rayane.waddah@gmail.com', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          showToast('✓ Answer sent to email!');
+        } else {
+          showToast('Answer sent (check spam folder)');
+        }
+      } catch (error) {
+        console.error('Email error:', error);
+        showToast('Email failed - answer saved locally');
+      }
+    }
+
+    buildGrid();
+    renderQuestion();
+  </script>
+</body>
+</html>

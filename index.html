@@ -407,7 +407,7 @@
         <button class="wifi-status" id="wifiStatus" title="Connection status"></button>
         <div>
           <h1 id="mainTitle">100 Questions About You</h1>
-          <p class="lead" id="mainLead">Play the pink question adventure. Answer one question to unlock the next tile, and discover more about each other step by step.</p>
+          <p class="lead" id="mainLead">Play the 100 question adventure. Answer one question to unlock the next tile 😁!</p>
         </div>
         <div style="display: flex; gap: 8px;">
           <button class="lang-btn active" data-lang="en">English</button>
@@ -435,7 +435,7 @@
 
         <div class="actions">
           <button id="submitBtn">Next question</button>
-          <p class="hint" id="hintText">Each answer unlocks a new pink tile.</p>
+          <p class="hint" id="hintText">Each answer unlocks a new tile.</p>
         </div>
 
         <div class="complete-banner" id="completeBanner" style="display:none;">
@@ -457,11 +457,11 @@
     const translations = {
       en: {
         title: '100 Questions About You',
-        lead: 'Play the pink question adventure. Answer one question to unlock the next tile, and discover more about each other step by step.',
+        lead: 'Play the 100 question adventure. Answer one question to unlock the next tile 😁!',
         yourAnswer: 'Your answer',
         placeholder: 'Type your answer here...',
         nextQuestion: 'Next question',
-        hint: 'Each answer unlocks a new pink tile.',
+        hint: 'Each answer unlocks a new tile.',
         finished: 'You have answered every question!',
         questionLabel: 'Question',
         progress: 'of 100',
@@ -472,11 +472,11 @@
       },
       nl: {
         title: '100 Vragen Over Jou',
-        lead: 'Speel het roze vragen-avontuur. Beantwoord een vraag om het volgende vakje te ontgrendelen, en ontdek stap voor stap meer over elkaar.',
+        lead: 'Speel het avontuur met 100 vragen. Beantwoord één vraag om het volgende vakje te ontgrendelen 😁!',
         yourAnswer: 'Jouw antwoord',
         placeholder: 'Typ hier je antwoord...',
         nextQuestion: 'Volgende vraag',
-        hint: 'Elke antwoord ontgrendelt een nieuw roze vakje.',
+        hint: 'Elke antwoord ontgrendelt een nieuw vakje.',
         finished: 'Je hebt alle vragen beantwoord!',
         questionLabel: 'Vraag',
         progress: 'van 100',
@@ -487,11 +487,11 @@
       },
       es: {
         title: '100 Preguntas Sobre Ti',
-        lead: 'Juega la aventura de preguntas rosas. Responde una pregunta para desbloquear la siguiente casilla y descubre más sobre uno al otro paso a paso.',
+        lead: '¡Juega a la aventura de 100 preguntas! ¡Responde una pregunta para desbloquear la siguiente ficha 😁!',
         yourAnswer: 'Tu respuesta',
         placeholder: 'Escribe tu respuesta aquí...',
         nextQuestion: 'Siguiente pregunta',
-        hint: 'Cada respuesta desbloquea una nueva casilla rosa.',
+        hint: 'Cada respuesta desbloquea una nueva casilla.',
         finished: '¡Has respondido todas las preguntas!',
         questionLabel: 'Pregunta',
         progress: 'de 100',
@@ -754,11 +754,9 @@
     function updateWiFiStatus() {
       if (navigator.onLine) {
         wifiStatus.classList.remove('offline');
-        wifiStatus.textContent = '📡';
         wifiStatus.title = 'Connected - Answers will be sent';
       } else {
         wifiStatus.classList.add('offline');
-        wifiStatus.textContent = '📡';
         wifiStatus.title = 'Offline - Answers saved locally';
       }
     }

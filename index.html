@@ -2,807 +2,274 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>100 Questions About You</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Our Date</title>
 
   <style>
     :root {
-      --bg: #ffe6f2;
-      --card: #fff1f8;
-      --card-dark: #ffcce2;
       --accent: #ff7090;
       --accent-2: #ff93b5;
       --text: #3a1f2f;
-      --border: rgba(255, 112, 144, 0.25);
-      --shadow: 0 18px 40px rgba(255, 112, 144, 0.18);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
+    }
+
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: radial-gradient(circle at top, #fff0f7 0%, #ffdce7 35%, #ffe6f2 100%);
       color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
     }
 
-    .page {
+    .scene-stage {
       min-height: 100vh;
-      padding: 24px 16px 40px;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    header {
-      max-width: 900px;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-
-    header > div {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .lang-btn {
-      background: rgba(255, 112, 144, 0.2);
-      border: 1px solid rgba(255, 112, 144, 0.4);
-      color: #70384d;
-      padding: 8px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
-
-    .lang-btn:hover {
-      background: rgba(255, 112, 144, 0.3);
-    }
-
-    .lang-btn.active {
-      background: linear-gradient(135deg, #ff7fa0, #ff4e8a);
-      color: white;
-      border-color: #ff4e8a;
-    }
-
-    .wifi-status {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
-      transition: all 0.3s ease;
-      cursor: help;
-      background: #28a745;
-      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-      border: none;
-      padding: 0;
+      gap: 22px;
+      padding: 24px 18px;
     }
 
-    .wifi-status.offline {
-      background: #ccc;
-      box-shadow: 0 4px 12px rgba(200, 200, 200, 0.3);
-    }
-
-    .wifi-status:hover {
-      transform: scale(1.08);
-    }
-
-    h1 {
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      margin: 0;
-      letter-spacing: -0.04em;
-    }
-
-    p.lead {
-      margin: 12px auto 0;
-      color: #6f3d58;
-      max-width: 760px;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .game-area {
+    /* 16:9 box so the whole photo always shows — no cropping on any screen shape */
+    .scene-image-card {
+      position: relative;
       width: 100%;
-      max-width: 1080px;
-      display: grid;
-      gap: 18px;
-      grid-template-columns: minmax(0, 1.2fr) 0.8fr;
-    }
-
-    .panel {
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      padding: 22px;
-      backdrop-filter: blur(12px);
-    }
-
-    .question-card {
-      display: grid;
-      gap: 16px;
-    }
-
-    .question-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .question-header .badge {
-      background: linear-gradient(135deg, #ff85a2, #ff6a95);
-      color: white;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      letter-spacing: 0.01em;
-    }
-
-    .progress-bar {
-      width: 100%;
-      background: rgba(255, 112, 144, 0.16);
-      border-radius: 999px;
-      height: 14px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, #ff8cb7, #ff5b8c);
-      transition: width 0.35s ease;
-    }
-
-    .question-text {
-      background: linear-gradient(180deg, #fff7fb 0%, #ffe5f1 100%);
-      border: 1px solid rgba(255, 112, 144, 0.22);
+      max-width: 560px;
+      aspect-ratio: 16 / 9;
       border-radius: 24px;
-      padding: 48px 18px 48px;
-      min-height: 170px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-size: clamp(1.1rem, 2vw, 1.45rem);
-      line-height: 1.4;
-      color: #61314a;
-      position: relative;
-    }
-
-    .question-text::before {
-      content: '💗';
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 4rem;
-      opacity: 0.15;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    label {
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: #70384d;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      border: 1px solid rgba(255, 112, 144, 0.4);
-      border-radius: 18px;
-      padding: 14px 16px;
-      font-size: 1rem;
-      outline: none;
-      background: white;
-      color: #4c2b3c;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: #ff8db3;
-      box-shadow: 0 0 0 4px rgba(255, 112, 144, 0.12);
-    }
-
-    textarea { resize: vertical; min-height: 110px; }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-
-    button {
-      background: linear-gradient(135deg, #ff7fa0, #ff4e8a);
-      border: none;
-      color: white;
-      padding: 14px 22px;
-      border-radius: 999px;
-      box-shadow: 0 12px 24px rgba(255, 82, 141, 0.28);
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.18s ease, opacity 0.2s ease;
-    }
-
-    button:hover {
-      transform: translateY(-1px);
-    }
-
-    .hint {
-      font-size: 0.95rem;
-      color: #7a4c64;
-      margin: 0;
-    }
-
-    .grid-panel {
-      display: grid;
-      gap: 16px;
-    }
-
-    .grid-title {
-      padding-left: 20px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin: 0 0 6px;
-      color: #642f4d;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .box {
-      position: relative;
-      min-height: 72px;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: white;
-      background: rgba(255, 112, 144, 0.16);
-      border: 1px solid rgba(255, 112, 144, 0.25);
-      transition: transform 0.25s ease, filter 0.25s ease, opacity 0.25s ease;
       overflow: hidden;
+      background: linear-gradient(160deg, #3a2029 0%, #1a0f14 100%);
+      box-shadow: 0 18px 40px rgba(255, 112, 144, 0.22);
     }
 
-    .box.locked {
-      filter: blur(1.4px);
-      opacity: 0.65;
-      background: rgba(255, 255, 255, 0.7);
-    }
-
-    .box.current {
-      background: linear-gradient(180deg, #ff95b7, #ff5b8c);
-      transform: scale(1.03);
-      box-shadow: 0 16px 34px rgba(255, 117, 166, 0.22);
-    }
-
-    .box.answered {
-      background: linear-gradient(180deg, #ff70a7, #ff4788);
-    }
-
-    .box::after {
-      content: '';
+    .scene-image {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top left, rgba(255,255,255,0.32), transparent 45%);
-      opacity: 0.35;
-    }
-
-    .box span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .box.locked::before {
-      content: '🔒';
-      position: absolute;
-      font-size: 1.3rem;
-      opacity: 0.8;
-    }
-
-    .complete-banner {
-      text-align: center;
-      padding: 30px 20px;
-      border-radius: 28px;
-      background: #ffd9e8;
-      border: 1px solid rgba(255, 112, 144, 0.3);
-      color: #5a2a48;
-      margin-top: 10px;
-    }
-
-    .complete-banner h2 {
-      margin: 0 0 12px;
-      font-size: 1.75rem;
-    }
-
-    .complete-banner p {
-      margin: 0;
-      line-height: 1.7;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #ff6f94;
-      color: white;
-      padding: 14px 20px;
-      border-radius: 999px;
-      box-shadow: 0 12px 28px rgba(255, 82, 141, 0.28);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-      z-index: 50;
+      transition: opacity 0.7s ease;
     }
 
-    .toast.show {
+    .scene-image.visible {
       opacity: 1;
     }
 
-    @media (max-width: 860px) {
-      .game-area {
-        grid-template-columns: 1fr;
-      }
+    /* Placeholder shown when an image is missing, so the flow still works before real photos are added */
+    .scene-image-card::before {
+      content: '📷 Add "' attr(data-filename) '" to the assets folder';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.55);
+      z-index: 0;
+    }
 
-      .grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    .scene-image {
+      z-index: 1;
+    }
+
+    .scene-caption {
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      font-size: clamp(1.05rem, 4vw, 1.5rem);
+      line-height: 1.5;
+      color: #61314a;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.6s ease 0.15s, transform 0.6s ease 0.15s;
+    }
+
+    .scene-caption.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dots {
+      display: flex;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 112, 144, 0.28);
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--accent);
+      width: 22px;
+      border-radius: 999px;
+    }
+
+    .next-btn {
+      background: linear-gradient(135deg, #ff7fa0, #ff4e8a);
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(255, 82, 141, 0.32);
+      transition: transform 0.18s ease;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .next-btn:active {
+      transform: translateY(0);
+    }
+
+    .skip-hint {
+      font-size: 0.8rem;
+      color: #a3667c;
+    }
+
+    @media (max-width: 600px) {
+      .skip-hint {
+        display: none;
       }
     }
 
-    @media (max-width: 620px) {
-      .grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .question-text {
-        min-height: 170px;
-        padding: 48px 18px 48px;
-        align-items: center;
-      }
-
-      .question-text::before {
-        font-size: 4rem;
-        opacity: 0.15;
-      }
-
-      .grid-panel {
-        padding: 0 4px;
-      }
-
-      .grid-title {
-        padding-top: 12px;
-
+    @media (max-height: 560px) {
+      .scene-stage {
+        justify-content: flex-start;
+        overflow-y: auto;
       }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div>
-        <button class="wifi-status" id="wifiStatus" title="Connection status"></button>
-        <div>
-          <h1 id="mainTitle">100 Questions About You</h1>
-          <p class="lead" id="mainLead">Play the 100 question adventure. Answer one question to unlock the next tile 😁!</p>
-        </div>
-        <div style="display: flex; gap: 8px;">
-          <button class="lang-btn active" data-lang="en">English</button>
-          <button class="lang-btn" data-lang="nl">Nederlands</button>
-          <button class="lang-btn" data-lang="es">Español</button>
-        </div>
-      </div>
-    </header>
-
-    <div class="game-area">
-      <section class="panel question-card">
-        <div class="question-header">
-          <div class="badge" id="questionCount">Question 1 of 100</div>
-          <div class="progress-bar" aria-hidden="true">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-        </div>
-
-        <div class="question-text" id="questionText">Loading...</div>
-
-        <div>
-          <label for="answerInput" id="answerLabel">Your answer</label>
-          <textarea id="answerInput" placeholder="Type your answer here..."></textarea>
-        </div>
-
-        <div class="actions">
-          <button id="submitBtn">Next question</button>
-          <p class="hint" id="hintText">Each answer unlocks a new tile.</p>
-        </div>
-
-        <div class="complete-banner" id="completeBanner" style="display:none;">
-          <h2 id="completeBannerTitle">You made it! 🎉</h2>
-          <p id="completeBannerMsg">All 100 questions answered. You've journeyed from light discovery to deeper connection.</p>
-        </div>
-      </section>
-
-      <section class="panel grid-panel">
-        <h2 class="grid-title" id="unlockedLabel">Unlocked questions</h2>
-        <div class="grid" id="grid"></div>
-      </section>
+  <div class="scene-stage" id="stage">
+    <div class="scene-image-card" id="imageCard">
+      <img class="scene-image" id="sceneImage" alt="" />
     </div>
 
-    <div class="toast" id="toast">Please type an answer before moving on.</div>
+    <p class="scene-caption" id="sceneCaption"></p>
+    <div class="dots" id="dots"></div>
+    <button class="next-btn" id="nextBtn">Next →</button>
+    <div class="skip-hint">press → to continue</div>
   </div>
 
   <script>
-    const translations = {
-      en: {
-        title: '100 Questions About You',
-        lead: 'Play the 100 question adventure. Answer one question to unlock the next tile 😁!',
-        yourAnswer: 'Your answer',
-        placeholder: 'Type your answer here...',
-        nextQuestion: 'Next question',
-        hint: 'Each answer unlocks a new tile.',
-        finished: 'You have answered every question!',
-        questionLabel: 'Question',
-        progress: 'of 100',
-        unlockedLabel: 'Unlocked questions',
-        emptyError: 'Please type an answer before moving on.',
-        done: 'You made it! 🎉',
-        doneMsg: 'All 100 questions answered. You\'ve journeyed from light discovery to deeper connection.'
+    // Add your own photos (16:9 format) to the assets folder.
+    // Each scene = 1 image + 1 caption. Feel free to add more "on the way" scenes in between.
+    const scenes = [
+      {
+        image: 'assets/date-1-start.png',
+        caption: 'Our date begins...'
       },
-      nl: {
-        title: '100 Vragen Over Jou',
-        lead: 'Speel het avontuur met 100 vragen. Beantwoord één vraag om het volgende vakje te ontgrendelen 😁!',
-        yourAnswer: 'Jouw antwoord',
-        placeholder: 'Typ hier je antwoord...',
-        nextQuestion: 'Volgende vraag',
-        hint: 'Elke antwoord ontgrendelt een nieuw vakje.',
-        finished: 'Je hebt alle vragen beantwoord!',
-        questionLabel: 'Vraag',
-        progress: 'van 100',
-        unlockedLabel: 'Ontgrendelde vragen',
-        emptyError: 'Typ eerst een antwoord voordat je verder gaat.',
-        done: 'Je hebt het gehaald! 🎉',
-        doneMsg: 'Alle 100 vragen beantwoord. Je bent gegaan van lichte kennismaking naar diepere verbinding.'
+      {
+        image: 'assets/date-2-walk.png',
+        caption: 'On our way to our spots...'
       },
-      es: {
-        title: '100 Preguntas Sobre Ti',
-        lead: '¡Juega a la aventura de 100 preguntas! ¡Responde una pregunta para desbloquear la siguiente ficha 😁!',
-        yourAnswer: 'Tu respuesta',
-        placeholder: 'Escribe tu respuesta aquí...',
-        nextQuestion: 'Siguiente pregunta',
-        hint: 'Cada respuesta desbloquea una nueva casilla.',
-        finished: '¡Has respondido todas las preguntas!',
-        questionLabel: 'Pregunta',
-        progress: 'de 100',
-        unlockedLabel: 'Preguntas desbloqueadas',
-        emptyError: 'Por favor escribe una respuesta antes de continuar.',
-        done: '¡Lo hiciste! 🎉',
-        doneMsg: 'Las 100 preguntas respondidas. Has pasado de un descubrimiento ligero a una conexión más profunda.'
+      {
+        image: 'assets/date-3-walk.png',
+        caption: 'A little further, walking together.'
+      },
+      {
+        image: 'assets/date-4-together.png',
+        caption: 'And there we are, finally together.'
       }
-    };
-
-    const questions = [
-      { en: 'Which color makes you feel calm, and why?', nl: 'Welke kleur maakt je rustig en waarom?', es: '¿Qué color te hace sentir tranquilo y por qué?' },
-      { en: 'Which song instantly lifts your mood?', nl: 'Welk liedje verbetert meteen je humeur?', es: '¿Qué canción te alegra al instante?' },
-      { en: 'What do you enjoy doing on a quiet day (except tiktok)?', nl: 'Wat doe je graag op een rustige dag (behalve TikTok)?', es: '¿Qué disfrutas hacer en un día tranquilo (excepto TikTok)?' },
-      { en: 'Which snack or snack genre makes any evening better?', nl: 'Welke snack of snacksoort maakt elke avond beter?', es: '¿Qué snack o tipo de snack mejora cualquier noche?' },
-      { en: 'What was the last movie or show that really stayed with you?', nl: 'Welke film of serie bleef je de laatste tijd echt bij?', es: '¿Cuál fue la última película o serie que realmente se quedó contigo?' },
-      { en: 'Where specifically do you feel most relaxed?', nl: 'Waar voel je je het meest ontspannen?', es: '¿Dónde te sientes más relajado?' },
-      { en: 'If you could travel anywhere tomorrow, except for spain and morocco, where would you go?', nl: 'Als je morgen overal heen kon reizen, behalve Spanje en Marokko, waar zou je heen gaan?', es: 'Si pudieras viajar a cualquier lugar mañana, excepto España y Marruecos, ¿a dónde irías?' },
-      { en: 'What made you smile today?', nl: 'Wat maakte je vandaag blij?', es: '¿Qué te hizo sonreír hoy?' },
-      { en: 'What do you love most about your favorite season?', nl: 'Wat vind je het leukste aan je favoriete seizoen?', es: '¿Qué es lo que más te gusta de tu estación favorita?' },
-      { en: 'What emoji do you use most often?', nl: 'Welke emoji gebruik je het vaakst?', es: '¿Qué emoji usas más seguido?' },
-      { en: 'Which animal do you find most curious?', nl: 'Welk dier vind je het meest bijzonder?', es: '¿Qué animal te parece más curioso?' },
-      { en: 'What usually makes you laugh out loud?', nl: 'Wat laat je meestal hardop lachen?', es: '¿Qué te hace reír a carcajadas normalmente?' },
-      { en: 'Is there a hobby you would like to learn one day?', nl: 'Is er een hobby die je ooit zou willen leren?', es: '¿Hay algún pasatiempo que te gustaría aprender algún día?' },
-      { en: 'Are you more of a morning person or an evening person?', nl: 'Ben je meer een ochtendmens of een avondmens?', es: '¿Eres más persona de mañanas o de noches?' },
-      { en: 'What meal feels like comfort food to you?', nl: 'Welk gerecht voelt voor jou als comfortfood?', es: '¿Qué comida sientes como comida reconfortante?' },
-      { en: 'What memory do you return to when you need a little boost?', nl: 'Aan welke herinnering denk je als je een oppepper nodig hebt?', es: '¿A qué recuerdo vuelves cuando necesitas un pequeño impulso?' },
-      { en: 'What place near you feels peaceful?', nl: 'Welke plek bij jou in de buurt voelt rustig?', es: '¿Qué lugar cerca de ti se siente tranquilo?' },
-      { en: 'What skill would you love to master?', nl: 'Welke vaardigheid zou je graag beheersen?', es: '¿Qué habilidad te encantaría dominar?' },
-      { en: 'How do you like to spend time with friends?', nl: 'Hoe breng je graag tijd door met vrienden?', es: '¿Cómo te gusta pasar tiempo con amigos?' },
-      { en: 'Describe your perfect relaxing day.', nl: 'Beschrijf je perfecte ontspannen dag.', es: 'Describe tu día relajante perfecto.' },
-      { en: 'What quality do you value in a close friend?', nl: 'Welke eigenschap waardeer je in een goede vriend?', es: '¿Qué cualidad valoras en un amigo cercano?' },
-      { en: 'What gives you energy when you feel tired?', nl: 'Wat geeft je energie als je moe bent?', es: '¿Qué te da energía cuando te sientes cansado?' },
-      { en: 'What kind of compliment means the most to you?', nl: 'Welk soort compliment betekent het meest voor jou?', es: '¿Qué tipo de cumplido significa más para ti?' },
-      { en: 'What is one thing you are curious to learn more about?', nl: 'Wat is één ding waar je nieuwsgierig naar bent om meer over te leren?', es: '¿Qué es una cosa sobre la que tienes curiosidad de aprender más?' },
-      { en: 'How do you usually begin a good day?', nl: 'Hoe begin je meestal een goede dag?', es: '¿Cómo sueles comenzar un buen día?' },
-      { en: 'What makes an evening feel special to you?', nl: 'Wat maakt een avond speciaal voor jou?', es: '¿Qué hace que una noche se sienta especial para ti?' },
-      { en: 'Which scent brings back a good memory?', nl: 'Welke geur brengt een fijne herinnering terug?', es: '¿Qué aroma te trae un buen recuerdo?' },
-      { en: 'Which book or story inspired you?', nl: 'Welk boek of verhaal inspireerde je?', es: '¿Qué libro o historia te inspiró?' },
-      { en: 'Where do you go when you need time alone?', nl: 'Waar ga je heen als je tijd voor jezelf nodig hebt?', es: '¿A dónde vas cuando necesitas tiempo a solas?' },
-      { en: 'What activity can absorb you for hours?', nl: 'Welke activiteit kan je urenlang bezig houden?', es: '¿Qué actividad te puede absorber por horas?' },
-      { en: 'What small routine makes your day better?', nl: 'Welke kleine routine maakt je dag beter?', es: '¿Qué pequeña rutina mejora tu día?' },
-      { en: 'What do you find most beautiful in nature?', nl: 'Wat vind je het mooist in de natuur?', es: '¿Qué es lo que más encuentras hermoso en la naturaleza?' },
-      { en: 'What is your favorite drink to relax with?', nl: 'Wat is je favoriete drankje om mee te ontspannen?', es: '¿Cuál es tu bebida favorita para relajarte?' },
-      { en: 'What recent decision made you feel proud?', nl: 'Welke recente beslissing maakte je trots?', es: '¿Qué decisión reciente te hizo sentir orgulloso?' },
-      { en: 'How do you like to unwind after a busy day?', nl: 'Hoe ontspan je het liefst na een drukke dag?', es: '¿Cómo te gusta relajarte después de un día ocupado?' },
-      { en: 'What would you share first with someone new?', nl: 'Wat zou je als eerste delen met iemand nieuw?', es: '¿Qué compartirías primero con alguien nuevo?' },
-      { en: 'Do you appreciate people who listen well and why?', nl: 'Waarom waardeer je mensen die goed luisteren?', es: '¿Por qué valoras a las personas que escuchan bien?' },
-      { en: 'What time of day feels the coziest?', nl: 'Welke tijd van de dag voelt het meest knus?', es: '¿Qué momento del día te resulta más acogedor?' },
-      { en: 'What is your ideal way to celebrate a good day?', nl: 'Wat is je ideale manier om een goede dag te vieren?', es: '¿Cuál es tu forma ideal de celebrar un buen día?' },
-      { en: 'What is your favorite song at the moment?', nl: 'Wat is op dit moment je favoriete nummer?', es: '¿Cuál es tu canción favorita en este momento?' },
-      { en: 'Where do you feel the most safe?', nl: 'Waar voel je je het meest veilig?', es: '¿Dónde te sientes más seguro?' },
-      { en: 'What do you do every day just for yourself?', nl: 'Wat doe je elke dag alleen voor jezelf?', es: '¿Qué haces cada día solo para ti?' },
-      { en: 'Do you like helping others and why?', nl: 'Help je graag anderen en waarom?', es: '¿Te gusta ayudar a los demás y por qué?' },
-      { en: 'What adventure would you like to try one day?', nl: 'Welk avontuur zou je graag ooit proberen?', es: '¿Qué aventura te gustaría probar algún día?' },
-      { en: 'What item of clothing makes you feel most comfortable?', nl: 'Welk kledingstuk laat je je het meest comfortabel voelen?', es: '¿Qué prenda de vestir te hace sentir más cómodo?' },
-      { en: 'Which childhood memory still makes you smile?', nl: 'Welke jeugdherinnering laat je nog steeds glimlachen?', es: '¿Qué recuerdo de la infancia aún te hace sonreír?' },
-      { en: 'How would you describe a warm atmosphere?', nl: 'Hoe zou je een warme sfeer beschrijven?', es: '¿Cómo describirías un ambiente cálido?' },
-      { en: 'What questions do you ask someone new?', nl: 'Welke vragen stel je graag aan iemand nieuw?', es: '¿Qué preguntas te gusta hacerle a alguien nuevo?' },
-      { en: 'What makes you feel curious?', nl: 'Wat maakt je nieuwsgierig?', es: '¿Qué te hace sentir curioso?' },
-      { en: 'What is your favorite way to start the weekend?', nl: 'Wat is je favoriete manier om het weekend te beginnen?', es: '¿Cuál es tu forma favorita de comenzar el fin de semana?' },
-      { en: 'What do you like to do on a rainy day at home?', nl: 'Wat doe je graag op een regenachtige dag thuis?', es: '¿Qué te gusta hacer en un día lluvioso en casa?' },
-      { en: 'How does your weekend look like when you were younger?', nl: 'Hoe zag je weekend eruit toen je jonger was?', es: '¿Cómo era tu fin de semana cuando eras más joven?' },
-      { en: 'What makes your heart race in a good way?', nl: 'Wat laat je hart op een goede manier sneller kloppen?', es: '¿Qué hace que tu corazón se acelere de una buena manera?' },
-      { en: 'Which personality trait do you admire most?', nl: 'Welke persoonlijkheidstrek bewonder je het meest?', es: '¿Qué rasgo de personalidad admiras más?' },
-      { en: 'What do you find hard to share?', nl: 'Wat vind je moeilijk om te delen?', es: '¿Qué te resulta difícil compartir?' },
-      { en: 'Describe your dream day with friends.', nl: 'Beschrijf je droomdag met vrienden.', es: 'Describe tu día soñado con amigos.' },
-      { en: 'What kind of compliment brightens your day?', nl: 'Wat voor compliment maakt je dag beter?', es: '¿Qué tipo de cumplido alegra tu día?' },
-      { en: 'Which memory would you never want to forget?', nl: 'Welke herinnering zou je nooit willen vergeten?', es: '¿Qué recuerdo nunca querrías olvidar?' },
-      { en: 'What gives you a warm feeling inside?', nl: 'Wat geeft je een warm gevoel van binnen?', es: '¿Qué te da una sensación cálida por dentro?' },
-      { en: 'How do you show someone that you care?', nl: 'Hoe laat je iemand weten dat je om hem of haar geeft?', es: '¿Cómo le demuestras a alguien que te importa?' },
-      { en: 'Do you enjoy a pleasant surprise and why?', nl: 'Geniet je van een leuke verrassing en waarom?', es: '¿Disfrutas una sorpresa agradable y por qué?' },
-      { en: 'What small moment feels extra meaningful?', nl: 'Welk klein moment voelt extra betekenisvol?', es: '¿Qué momento pequeño se siente especialmente significativo?' },
-      { en: 'How do you feel when someone truly pays attention?', nl: 'Hoe voel je je als iemand echt oplet?', es: '¿Cómo te sientes cuando alguien presta verdadera atención?' },
-      { en: 'What are you grateful for today?', nl: 'Waar ben je vandaag dankbaar voor?', es: '¿Por qué estás agradecido hoy?' },
-      { en: 'Do you have a bad habit?', nl: 'Heb je een slechte gewoonte?', es: '¿Tienes un mal hábito?' },
-      { en: 'How do you cheer someone up?', nl: 'Hoe vrolijk je iemand op?', es: '¿Cómo animas a alguien?' },
-      { en: 'What dream do you keep close to your heart?', nl: 'Welke droom draag je dicht bij je hart?', es: '¿Qué sueño guardas cerca de tu corazón?' },
-      { en: 'How would a relaxed evening with you look?', nl: 'Hoe zou een ontspannen avond met jou eruitzien?', es: '¿Cómo sería una noche relajada contigo?' },
-      { en: 'What does respect look like to you?', nl: 'Hoe ziet respect er voor jou uit?', es: '¿Cómo se ve el respeto para ti?' },
-      { en: 'How would you like to be remembered by someone?', nl: 'Hoe zou je willen dat iemand je herinnert?', es: '¿Cómo te gustaría que alguien te recordara?' },
-      { en: 'What are you looking forward to this week?', nl: 'Waar kijk je deze week naar uit?', es: '¿Qué esperas con ansias esta semana?' },
-      { en: 'What is one thing you wish happened today?', nl: 'Wat is één ding dat je vandaag had willen laten gebeuren?', es: '¿Qué es una cosa que desearías que pasara hoy?' },
-      { en: 'What quality feels charming without being too much?', nl: 'Welke eigenschap voelt charmant zonder te veel te zijn?', es: '¿Qué cualidad se siente encantadora sin ser exagerada?' },
-      { en: 'What makes a calm conversation feel meaningful?', nl: 'Wat maakt een rustig gesprek zinvol?', es: '¿Qué hace que una conversación tranquila se sienta significativa?' },
-      { en: 'What question feels brave but worth asking?', nl: 'Welke vraag voelt moedig maar de moeite waard om te stellen?', es: '¿Qué pregunta se siente valiente pero vale la pena hacer?' },
-      { en: 'What do you share when you trust someone?', nl: 'Wat deel je als je iemand vertrouwt?', es: '¿Qué compartes cuando confías en alguien?' },
-      { en: 'What makes a sweet message feel special to you?', nl: 'Wat maakt een lief bericht speciaal voor jou?', es: '¿Qué hace que un mensaje dulce se sienta especial para ti?' },
-      { en: 'What made you laugh recently?', nl: 'Wat maakte je onlangs aan het lachen?', es: '¿Qué te hizo reír recientemente?' },
-      { en: 'Would you choose a funny night or a cozy night right now?', nl: 'Zou je nu een grappige avond of een knusse avond kiezen?', es: '¿Preferirías una noche divertida o una noche acogedora ahora mismo?' },
-      { en: 'What kind words would you love to hear more often?', nl: 'Welke lieve woorden hoor je het liefst vaker?', es: '¿Qué palabras amables te gustaría escuchar más a menudo?' },
-      { en: 'What detail in someone catches your attention?', nl: 'Welk detail valt je op aan iemand?', es: '¿Qué detalle en alguien llama tu atención?' },
-      { en: 'What memory of a nice evening do you treasure?', nl: 'Welke herinnering aan een leuke avond koester je?', es: '¿Qué recuerdo de una buena noche atesoras?' },
-      { en: 'What little thing makes your heart beat faster in a good way?', nl: 'Welk klein ding laat je hart sneller kloppen op een goede manier?', es: '¿Qué pequeña cosa hace que tu corazón lata más rápido de buena manera?' },
-      { en: 'What is your mood right now?', nl: 'Hoe is je stemming op dit moment?', es: '¿Cuál es tu estado de ánimo ahora mismo?' },
-      { en: 'What would you most like to share with someone getting closer?', nl: 'Wat zou je het liefst delen met iemand die dichterbij komt?', es: '¿Qué te gustaría compartir con alguien que se está acercando?' },
-      { en: 'What is a soft way to flirt that feels natural?', nl: 'Wat is een zachte manier om te flirten die natuurlijk voelt?', es: '¿Cuál es una forma suave de coquetear que se siente natural?' },
-      { en: 'What compliment surprises you in the best way?', nl: 'Welk compliment verrast je op de beste manier?', es: '¿Qué cumplido te sorprende de la mejor manera?' },
-      { en: 'What small gesture catches your attention?', nl: 'Welk klein gebaar valt je op?', es: '¿Qué pequeño gesto llama tu atención?' },
-      { en: 'What feels romantic in a simple conversation?', nl: 'Wat voelt romantisch in een simpel gesprek?', es: '¿Qué se siente romántico en una conversación sencilla?' },
-      { en: 'How do you show appreciation for someone?', nl: 'Hoe laat je waardering voor iemand zien?', es: '¿Cómo muestras aprecio por alguien?' },
-      { en: 'Who was your childhood best friend and what was she like?', nl: 'Wie was je beste vriendin uit je jeugd en hoe was zij?', es: '¿Quién fue tu mejor amiga de la infancia y cómo era?' },
-      { en: 'What question would you ask to learn about us?', nl: 'Welke vraag zou je stellen om meer over ons te leren?', es: '¿Qué pregunta harías para aprender sobre nosotros?' },
-      { en: 'What small gesture says the most without words?', nl: 'Welk klein gebaar zegt het meest zonder woorden?', es: '¿Qué pequeño gesto dice más sin palabras?' },
-      { en: 'What scared you as a child?', nl: 'Wat maakte je als kind bang?', es: '¿Qué te asustaba cuando eras niño?' },
-      { en: 'What is your biggest strength?', nl: 'Wat is je grootste kracht?', es: '¿Cuál es tu mayor fortaleza?' },
-      { en: 'Are you stubborn?', nl: 'Ben je koppig?', es: '¿Eres terco?' },
-      { en: 'What is something only close people know about you?', nl: 'Wat is iets dat alleen mensen die dicht bij je staan over je weten?', es: '¿Qué es algo que solo las personas cercanas a ti saben?' },
-      { en: 'What is your love language?', nl: 'Wat is jouw liefdestaal?', es: '¿Cuál es tu lenguaje del amor?' },
-      { en: 'What is your biggest weakness?', nl: 'Wat is je grootste zwakte?', es: '¿Cuál es tu mayor debilidad?' },
-      { en: 'What would you say to someone you like without rushing?', nl: 'Wat zou je zeggen tegen iemand die je leuk vindt zonder je te haasten?', es: '¿Qué le dirías a alguien que te gusta sin apresurarte?' }
     ];
 
-    let currentLanguage = 'en';
-    const grid = document.getElementById('grid');
-    const questionText = document.getElementById('questionText');
-    const questionCount = document.getElementById('questionCount');
-    const progressFill = document.getElementById('progressFill');
-    const answerInput = document.getElementById('answerInput');
-    const submitBtn = document.getElementById('submitBtn');
-    const completeBanner = document.getElementById('completeBanner');
-    const toast = document.getElementById('toast');
-    const wifiStatus = document.getElementById('wifiStatus');
+    const finalButtonLabel = 'Time to talk 💬';
+    const finalButtonHref = 'questions.html';
 
-    let currentIndex = null;
-    const answers = Array(questions.length).fill('');
+    const sceneImage = document.getElementById('sceneImage');
+    const imageCard = document.getElementById('imageCard');
+    const sceneCaption = document.getElementById('sceneCaption');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsEl = document.getElementById('dots');
 
-    function getUnansweredIndexes() {
-      return answers
-        .map((answer, index) => answer.trim().length === 0 ? index : -1)
-        .filter(index => index >= 0);
-    }
+    let current = 0;
 
-    function getAnsweredCount() {
-      return answers.filter(answer => answer.trim().length > 0).length;
-    }
-
-    function pickRandomQuestion() {
-      const remaining = getUnansweredIndexes();
-      if (remaining.length === 0) {
-        currentIndex = null;
-        return;
-      }
-      currentIndex = remaining[Math.floor(Math.random() * remaining.length)];
-    }
-
-    function updateLanguage(lang) {
-      currentLanguage = lang;
-      const t = translations[lang];
-      
-      document.getElementById('mainTitle').textContent = t.title;
-      document.getElementById('mainLead').textContent = t.lead;
-      document.getElementById('answerLabel').textContent = t.yourAnswer;
-      document.getElementById('answerInput').placeholder = t.placeholder;
-      document.getElementById('submitBtn').textContent = t.nextQuestion;
-      document.getElementById('hintText').textContent = t.hint;
-      document.getElementById('unlockedLabel').textContent = t.unlockedLabel;
-      document.getElementById('toast').textContent = t.emptyError;
-      document.getElementById('completeBannerTitle').textContent = t.done;
-      document.getElementById('completeBannerMsg').textContent = t.doneMsg;
-      
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-      });
-      
-      renderQuestion();
-    }
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => updateLanguage(btn.dataset.lang));
-    });
-
-    function buildGrid() {
-      grid.innerHTML = '';
-      for (let i = 0; i < questions.length; i++) {
-        const box = document.createElement('div');
-        box.className = 'box locked';
-        box.setAttribute('data-index', i);
-        box.innerHTML = `<span>${i + 1}</span>`;
-        grid.appendChild(box);
-      }
-      updateGrid();
-    }
-
-    function updateGrid() {
-      const boxes = grid.querySelectorAll('.box');
-      boxes.forEach((box) => {
-        const index = Number(box.dataset.index);
-        box.classList.toggle('answered', answers[index].length > 0);
-        box.classList.toggle('current', index === currentIndex);
-        box.classList.toggle('locked', index !== currentIndex && answers[index].length === 0);
-        if (answers[index].length > 0) {
-          box.innerHTML = `<span>✓</span>`;
-        } else {
-          box.innerHTML = `<span>${index + 1}</span>`;
-        }
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      scenes.forEach(() => {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dotsEl.appendChild(dot);
       });
     }
 
-    function renderQuestion() {
-      const t = translations[currentLanguage];
-      const answered = getAnsweredCount();
-      const complete = answered >= questions.length;
-
-      if (complete) {
-        questionText.textContent = t.finished;
-        questionCount.textContent = `100 ${t.progress}`;
-        answerInput.style.display = 'none';
-        submitBtn.style.display = 'none';
-        completeBanner.style.display = 'block';
-        progressFill.style.width = '100%';
-        return;
-      }
-
-      if (currentIndex === null) {
-        pickRandomQuestion();
-        updateGrid();
-      }
-
-      questionText.textContent = questions[currentIndex][currentLanguage];
-      questionCount.textContent = `${t.questionLabel} ${answered + 1} ${t.progress}`;
-      answerInput.value = answers[currentIndex] || '';
-      answerInput.style.display = 'block';
-      submitBtn.style.display = 'inline-flex';
-      completeBanner.style.display = 'none';
-      progressFill.style.width = `${(answered / questions.length) * 100}%`;
+    function updateDots() {
+      dotsEl.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+      });
     }
 
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 1800);
-    }
+    function renderScene() {
+      const scene = scenes[current];
+      const filename = scene.image.split('/').pop();
 
-    submitBtn.addEventListener('click', () => {
-      const answer = answerInput.value.trim();
-      if (!answer) {
-        showToast(translations[currentLanguage].emptyError);
-        return;
-      }
+      sceneImage.classList.remove('visible');
+      sceneCaption.classList.remove('visible');
+      imageCard.setAttribute('data-filename', filename);
 
-      const questionIndex = currentIndex;
-      const englishQuestion = questions[questionIndex].en;
-      answers[questionIndex] = answer;
-      pickRandomQuestion();
-      updateGrid();
-      renderQuestion();
-      answerInput.focus();
-      sendSingleAnswerEmail(questionIndex, englishQuestion, answer);
-    });
-
-    answerInput.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        submitBtn.click();
-      }
-    });
-
-    // WiFi Status Monitoring
-    function updateWiFiStatus() {
-      if (navigator.onLine) {
-        wifiStatus.classList.remove('offline');
-        wifiStatus.title = 'Connected - Answers will be sent';
-      } else {
-        wifiStatus.classList.add('offline');
-        wifiStatus.title = 'Offline - Answers saved locally';
-      }
-    }
-
-    window.addEventListener('online', updateWiFiStatus);
-    window.addEventListener('offline', updateWiFiStatus);
-    updateWiFiStatus();
-
-    // Send a single answer email using Formsubmit AJAX
-    async function sendSingleAnswerEmail(index, questionTextValue, answerValue) {
-      if (!navigator.onLine) {
-        showToast('No internet - answer saved locally');
-        return;
-      }
-
-      try {
-        const formData = new FormData();
-        formData.append('_subject', `Question ${index + 1} Answered`);
-        formData.append('question', questionTextValue);
-        formData.append('answer', answerValue);
-        formData.append('name', '100 Questions Game');
-        formData.append('_replyto', 'no-reply@questiongame.local');
-        formData.append('_captcha', 'false');
-        formData.append('_template', 'table');
-
-        const response = await fetch('https://formsubmit.co/ajax/rayane.waddah@gmail.com', {
-          method: 'POST',
-          body: formData,
-          headers: {
-            Accept: 'application/json'
-          }
+      // Small delay so the fade-out plays before swapping the image/caption
+      setTimeout(() => {
+        sceneImage.src = scene.image;
+        sceneCaption.textContent = scene.caption;
+        requestAnimationFrame(() => {
+          sceneImage.classList.add('visible');
+          sceneCaption.classList.add('visible');
         });
+      }, 200);
 
-        if (response.ok) {
-          showToast('✓ Thank you for your answer!');
-        } else {
-          showToast('Answer sent (check spam folder)');
-        }
-      } catch (error) {
-        console.error('Email error:', error);
-        showToast('Email failed - answer saved locally');
-      }
+      updateDots();
+
+      const isLast = current === scenes.length - 1;
+      nextBtn.textContent = isLast ? finalButtonLabel : 'Next →';
     }
 
-    buildGrid();
-    renderQuestion();
+    function goNext() {
+      const isLast = current === scenes.length - 1;
+      if (isLast) {
+        window.location.href = finalButtonHref;
+        return;
+      }
+      current += 1;
+      renderScene();
+    }
+
+    nextBtn.addEventListener('click', goNext);
+    imageCard.addEventListener('click', goNext);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        goNext();
+      }
+    });
+
+    buildDots();
+    renderScene();
   </script>
 </body>
 </html>
